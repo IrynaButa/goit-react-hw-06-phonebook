@@ -6,11 +6,7 @@ const initialState = {
     items: [],
     filter: ''
   }};
-// const contact = {
-//       id: shortid.generate(),
-//       name: "",
-//       number: "",
-//     };
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

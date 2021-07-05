@@ -1,13 +1,5 @@
 
 
-// const contact = {
-//       id: shortid.generate(),
-//       name,
-//       number,
-//     };
-
-
-
 export const addContact = array => ({
     type: 'contacts/Add',
     payload:array,
