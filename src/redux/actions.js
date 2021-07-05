@@ -5,16 +5,12 @@
 //       name,
 //       number,
 //     };
-export const getVisibleContact = contact => ({
-    type: 'contacts/GetVisible',
-    payload:contact,
-      
-})
 
 
-export const addContact = contact => ({
+
+export const addContact = array => ({
     type: 'contacts/Add',
-    payload:contact,
+    payload:array,
       
 })
 
@@ -23,7 +19,9 @@ export const deleteContact = contactId => ({
     payload: contactId,
 })
 
-export const updateContact = e => ({
+export const onChangeFilter = value => ({
     type: 'contacts/Update',
-    payload: e,
+    payload: value,
 })
+
+
