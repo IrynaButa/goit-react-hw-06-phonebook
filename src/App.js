@@ -1,62 +1,48 @@
-import React, { Component } from "react";
-import shortid from "shortid";
+import React from 'react';
 import PropTypes from 'prop-types';
-//import IconButton from
 import { connect } from 'react-redux';
-import * as actions from './redux/actions'
+
 
 import Contacts from "./Components/Contacts/Contacts";
 import Filter from "./Components/Filter/Filter";
 import Form from "./Components/Form/Form";
 
-const App = ({ filter, items, addContact, onChangeFilter, deleteContact }) => {
+
+const App = ({ filter, items, onChangeFilter,deleteContact, addContact }) => {
   const normalizedFilter = filter.toLowerCase();
-  const getVisibleContacts = items.filter((item) =>
-    item.name.toLowerCase().includes(normalizedFilter));
+  const visibleContacts = items.filter((item) =>
+      item.name.toLowerCase().includes(normalizedFilter)
+    );
   return (
     <div>
-      <h1>Phonebook</h1>
-      <Form onAddContact={addContact} />
+        <h1>Phonebook</h1>
+      <Form />
+      {/* <Form onAddContact={addContact} /> */}
 
-      <h2>Contacts</h2>
-      <Filter value={filter} onChangeFilter={onChangeFilter} />
-      <Contacts
-        contacts={getVisibleContacts}
-        onDeleteContact={deleteContact}
+        <h2>Contacts</h2>
+      <Filter />
+       {/* <Filter value={filter} onChangeFilter={onChangeFilter} /> */}
+        <Contacts
+          contacts={visibleContacts}
+         
       />
-    </div>
-  )
+      {/* <Contacts
+          contacts={visibleContacts}
+          onDeleteContact={deleteContact}
+        /> */}
+      </div>
+    
+  );
 };
-  App.propTypes = {
+
+App.propTypes = {
   filter: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
-  onAddContact: PropTypes.func.isRequired,
-  onChangeFilter: PropTypes.func.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-}
-  const mapStateToProps = state => {
-    return {
-      filter: state.contacts.filter,
-      items: state.contacts.items
-    }
-  };
-  const mapDispatchToProps = dispatch => {
-    const contact = {
-      id: shortid.generate(),
-      name: "",
-      number: "",
-    };
-    return {
-    
-      onAddContact: ({ name, number,id }) => dispatch(actions.addContact(contact)),
-      onDeleteContact: (contactId) => dispatch(actions.deleteContact(contactId)),
-      onChangeFilter: ({ currentTarget: { value } }) => dispatch(actions.onChangeFilter(value)),
-    
-    }
-  }
+};
 
+const mapStateToProps = state => ({
+  items: state.contacts.items,
+  filter: state.contacts.filter,
+});
 
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

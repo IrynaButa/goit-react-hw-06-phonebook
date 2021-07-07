@@ -1,43 +1,35 @@
-import { createStore } from "redux";
-import shortid from "shortid";
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import contactsReducer from './contacts-reducer';
 
-const initialState = {
-    contacts: {
-    items: [],
-    filter: ''
-  }};
-
-
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        
-        case 'contacts/Add':
-            return {
-                contacts: {
-                    ...state.contacts,
-                    items: [action.payload, ...state.contacts.items]
-                }
-   
-            }
-        case 'contacts/Delete':
-            return {
-                contacts: {
-                    ...state.contacts,
-                    items: state.contacts.items.filter(
-                        (contactId) => contactId !== action.payload)
-                }
-            }
-      
-        case 'contacts/Update':
-            return { contacts: {
-          ...state.contacts,
-          filter: action.payload,
-        }, };
-
-        default:
-            return state;
-    }
+const persistConfig = {
+  key: 'contacts',
+  storage,
+  blacklist: ['filter '],
 };
-const store = createStore(reducer);
+const persistContacts = persistReducer(persistConfig, contactsReducer);
 
-export default store;
+ export const store = configureStore({
+  reducer: {
+    contacts: persistContacts,
+  },
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+  devTools: process.env.NODE_ENV === 'development',
+});
+
+ export const persistor = persistStore(store);
+

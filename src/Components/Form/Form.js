@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import shortid from "shortid";
 import styles from "./Form.module.css";
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as actions from '../../redux/actions'
+import * as actions from '../../redux/contacts-actions';
 
 //import IconButton from '../IconButton/IconButton';
 import { ReactComponent as Add } from "../icons/add.svg";
@@ -14,11 +14,10 @@ class Form extends Component {
     number: "",
   };
 
-   nameInputId = shortid.generate();
-
+  nameInputId = shortid.generate();
 
   handleChange = (e) => {
-    const { name, value } = e.currentTarget;
+    const { name, value } = e.target;
 
     this.setState({ [name]: value });
   };
@@ -26,8 +25,7 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
-     
-    this.props.onSubmit(this.state);
+    this.props.onAddContact(this.state);
 
     this.reset();
   };
@@ -49,7 +47,6 @@ class Form extends Component {
             required
             value={this.state.name}
             onChange={this.handleChange}
-            id={this.nameInputId}
           />
         </label>
         <label>
@@ -62,7 +59,6 @@ class Form extends Component {
             required
             value={this.state.number}
             onChange={this.handleChange}
-        
           />
         </label>
 
@@ -75,7 +71,7 @@ class Form extends Component {
   }
 }
 Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onAddContact: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
@@ -84,12 +80,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ name, number,id }) =>
+  onAddContact: ({ name, number }) =>
     dispatch(
       actions.addContact({
         name,
         number,
-        id: shortid.generate()
       }),
     ),
 });
