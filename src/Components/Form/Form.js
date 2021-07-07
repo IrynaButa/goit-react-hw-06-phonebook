@@ -14,7 +14,8 @@ class Form extends Component {
     number: "",
   };
 
-  nameInputId = shortid.generate();
+   nameInputId = shortid.generate();
+
 
   handleChange = (e) => {
     const { name, value } = e.currentTarget;
@@ -25,6 +26,7 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
+     
     this.props.onSubmit(this.state);
 
     this.reset();
@@ -47,6 +49,7 @@ class Form extends Component {
             required
             value={this.state.name}
             onChange={this.handleChange}
+            id={this.nameInputId}
           />
         </label>
         <label>
@@ -59,6 +62,7 @@ class Form extends Component {
             required
             value={this.state.number}
             onChange={this.handleChange}
+        
           />
         </label>
 
@@ -80,11 +84,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ name, number }) =>
+  onSubmit: ({ name, number,id }) =>
     dispatch(
       actions.addContact({
         name,
         number,
+        id: shortid.generate()
       }),
     ),
 });

@@ -28,7 +28,7 @@ const App = ({ filter, items, addContact, onChangeFilter, deleteContact }) => {
   )
 };
   App.propTypes = {
-   filter: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
   onAddContact: PropTypes.func.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
@@ -48,9 +48,9 @@ const App = ({ filter, items, addContact, onChangeFilter, deleteContact }) => {
     };
     return {
     
-      onAddContact: ({ name, number }) => dispatch(actions.addContact(contact)),
+      onAddContact: ({ name, number,id }) => dispatch(actions.addContact(contact)),
       onDeleteContact: (contactId) => dispatch(actions.deleteContact(contactId)),
-      onChangeFilter: ({ target: { value } }) => dispatch(actions.onChangeFilter(value)),
+      onChangeFilter: ({ currentTarget: { value } }) => dispatch(actions.onChangeFilter(value)),
     
     }
   }

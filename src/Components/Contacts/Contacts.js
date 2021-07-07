@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Contacts.module.css";
 
+import shortid from "shortid";
+
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions'
 import IconButton from "../IconButton/IconButton";
@@ -9,16 +11,17 @@ import { ReactComponent as Delete } from "../icons/trash.svg";
 import { ReactComponent as Phone } from "../icons/phone.svg";
 //import { ReactComponent as IconUser } from '../../img/user.svg';
 
-const Contacts = ({ contacts, onDeleteContact }) => (
+const Contacts = ({ contacts, onDeleteContact,id }) => (
+   
   <ul className={styles.formContacts}>
-    {contacts.map((contact) => (
-      <li key={contact.id}>
+    {contacts.map(({id, name, number}) => (
+      <li key={id}>
         <Phone width="30" height="20" />
-        {contact.name}
+        {name}
         {" : "}
-        {contact.number}
+        {number}
         <IconButton
-          onClick={() => onDeleteContact(contact.id)}
+          onClick={() => onDeleteContact(id)}
           title="delete"
           aria-label="Delete tag"
         >
@@ -31,10 +34,11 @@ const Contacts = ({ contacts, onDeleteContact }) => (
 
 Contacts.propTypes = {
  onDeleteContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(PropTypes.shape).isRequired
+  contacts: PropTypes.arrayOf(PropTypes.shape).isRequired,
+
 };
 const mapDispatchToProps = dispatch => ({
-  onDeleteContact: idContact => dispatch(actions.deleteContact(idContact)),
+  onDeleteContact: id => dispatch(actions.deleteContact(id)),
 });
 
 export default connect(null, mapDispatchToProps)(Contacts);

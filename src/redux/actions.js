@@ -6,9 +6,9 @@ export const addContact = array => ({
       
 })
 
-export const deleteContact = contactId => ({
+export const deleteContact = id => ({
     type: 'contacts/Delete',
-    payload: contactId,
+    payload: id,
 })
 
 export const onChangeFilter = value => ({
