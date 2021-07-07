@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Filter.module.css";
 
-const Filter = ({ value, onChangeFilter }) => (
+const Filter = ({filter, onChangeFilter }) => (
   <div className={styles.form}>
     <label>
       Find contacts by name
-      <input type="text" value={value} onChange={onChangeFilter} />
+      <input type="text" value={filter} onChange={onChangeFilter} />
     </label>
   </div>
 );

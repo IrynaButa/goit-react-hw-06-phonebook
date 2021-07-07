@@ -31,13 +31,7 @@ const Contacts = ({ contacts, onDeleteContact }) => (
 
 Contacts.propTypes = {
  onDeleteContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
+  contacts: PropTypes.arrayOf(PropTypes.shape).isRequired
 };
 const mapDispatchToProps = dispatch => ({
   onDeleteContact: idContact => dispatch(actions.deleteContact(idContact)),

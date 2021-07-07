@@ -27,7 +27,13 @@ const App = ({ filter, items, addContact, onChangeFilter, deleteContact }) => {
     </div>
   )
 };
-  
+  App.propTypes = {
+   filter: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  onAddContact: PropTypes.func.isRequired,
+  onChangeFilter: PropTypes.func.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
+}
   const mapStateToProps = state => {
     return {
       filter: state.contacts.filter,
@@ -44,19 +50,13 @@ const App = ({ filter, items, addContact, onChangeFilter, deleteContact }) => {
     
       onAddContact: ({ name, number }) => dispatch(actions.addContact(contact)),
       onDeleteContact: (contactId) => dispatch(actions.deleteContact(contactId)),
-      onChangeFilter: (value) => dispatch(actions.onChangeFilter(value)),
+      onChangeFilter: ({ target: { value } }) => dispatch(actions.onChangeFilter(value)),
     
     }
   }
 
 
-App.propTypes = {
-   filter: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.any).isRequired,
-  onAddContact: PropTypes.func.isRequired,
-  onChangeFilter: PropTypes.func.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-}
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

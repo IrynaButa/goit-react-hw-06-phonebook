@@ -29,7 +29,10 @@ const reducer = (state = initialState, action) => {
             }
       
         case 'contacts/Update':
-            return { filter: action.payload.currentTarget.value };
+            return { contacts: {
+          ...state.contacts,
+          filter: action.payload,
+        }, };
 
         default:
             return state;
